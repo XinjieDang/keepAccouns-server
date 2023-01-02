@@ -1,0 +1,33 @@
+server:
+  port: 8089
+  servlet:
+    context-path: /ka
+spring:
+  profiles:
+    active: @profiles.active@
+  security:
+    user:
+      name: admin
+      password: 123456
+file:
+  location: D:/demo/images/ #自定义上传文件本地保存路径
+#日志配置
+logging:
+  config: classpath:logback-dev.xml
+  level:
+    com.dxj: debug
+    org.springframework: warn
+  file:
+    path: /root/application/testApp/logs
+knife4j:
+  # 开启增强配置
+  enable: true
+#项目相关配置
+keepAccounts:
+  title: 记账接口文档
+  description: 记账相关模块应用接口
+  name: developer
+  version: 1.0.0
+  enabled-swagger: true
+  #请求统一前缀
+  pathMapping: /ka
