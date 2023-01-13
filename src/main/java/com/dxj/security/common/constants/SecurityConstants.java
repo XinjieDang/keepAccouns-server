@@ -26,9 +26,8 @@ public class SecurityConstants {
 
     // JWT token 默认配置
     public static final String TOKEN_HEADER = "Authorization";
-    public static final String TOKEN_PREFIX = "Bearer ";
+    public static final String TOKEN_PREFIX = "Bearer";
     public static final String TOKEN_TYPE = "JWT";
-
     // swagger 白名单
     public static final String[] SWAGGER_WHITELIST = {
             "/swagger-ui.html",
@@ -45,8 +44,8 @@ public class SecurityConstants {
 
     // 系统放行白名单
     public static final String[] SYSTEM_WHITELIST = {
-            "/auth/login",
-            "/users/sign-up"
+            "/user/login",
+            "/user/sign-up"
     };
 
     private SecurityConstants() {

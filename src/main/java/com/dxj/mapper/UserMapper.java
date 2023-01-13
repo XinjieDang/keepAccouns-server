@@ -1,4 +1,8 @@
 package com.dxj.mapper;
 
-public class UserMapper {
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.dxj.model.User;
+
+public interface UserMapper extends BaseMapper<User> {
+
 }
