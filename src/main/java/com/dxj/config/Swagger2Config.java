@@ -16,7 +16,7 @@ import javax.annotation.Resource;
 
 /**
  * Knife4j增强版本的swagger的前端ui
- * 访问url http://localhost:8089/doc.html
+ * 访问url http://localhost:8089/ka/doc.html
  */
 @Configuration
 @EnableSwagger2

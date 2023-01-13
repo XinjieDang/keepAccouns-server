@@ -12,6 +12,7 @@ import com.dxj.utils.RedisUtils;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -37,7 +38,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         Authentication authenticate = authenticationManager.authenticate(authenticationToken);
         //如果认证没通过，给出对应的提示
         if (Objects.isNull(authenticate)) {
-            throw new RuntimeException("登录失败");
+            throw new BadCredentialsException("用户名或者密码错误！");
         }
         //如果认证通过，使用 userId 生成一个jwt
         LoginUser loginUser = (LoginUser) authenticate.getPrincipal();
@@ -55,11 +56,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public ResponseInfo logout() {
         //获取SecurityContextHolder中的用户id
-        UsernamePasswordAuthenticationToken authentication = (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext();
-        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
-        String userId = loginUser.getUser().getId().toString();
-        //删除redis中的值
-        redisUtils.deleteObject("login:" + userId);
-        return ResponseInfo.success("退出成功");
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.getPrincipal() != null) {
+            LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+            String userId = loginUser.getUser().getId().toString();
+            //删除redis中的值
+            redisUtils.deleteObject("login:" + userId);
+            return ResponseInfo.success("退出成功");
+        }
+        // UsernamePasswordAuthenticationToken authentication = (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext();
+        return ResponseInfo.fail("退出失败..");
     }
 }

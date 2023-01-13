@@ -6,6 +6,7 @@ import com.dxj.security.common.constants.SecurityConstants;
 import com.dxj.security.common.utils.JwtTokenUtils;
 import com.dxj.utils.RedisUtils;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -47,7 +48,9 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
         String redisKey = "login:" + userId;
         LoginUser loginUser = (LoginUser)redisUtils.getCacheObject(redisKey);
         if (Objects.isNull(loginUser)) {
-            throw new RuntimeException("用户未登录");
+            logger.error("用户未登录或登录已过期！");
+            filterChain.doFilter(request, response);
+            return;
         }
         //TODO 获取权限信息封装到Authentication中
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginUser, null, null);

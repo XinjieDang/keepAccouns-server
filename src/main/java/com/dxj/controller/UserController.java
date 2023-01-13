@@ -1,5 +1,4 @@
 package com.dxj.controller;
-
 import com.dxj.bo.ResponseInfo;
 import com.dxj.dto.LoginRequest;
 import com.dxj.model.User;
@@ -8,7 +7,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
-
 import javax.annotation.Resource;
 
 @RestController
@@ -18,19 +16,18 @@ import javax.annotation.Resource;
 public class UserController {
     @Resource
     private UserService userService;
-    @GetMapping("/sign-up")
-    @ApiOperation(value = "用户注册")
-    public ResponseInfo signUp(@RequestBody User user){
-        userService.save(user);
-        return ResponseInfo.success();
-    }
     @PostMapping("/login")
     @ApiOperation(value = "用户登录认证")
     public ResponseInfo login(@RequestBody LoginRequest loginRequest){
         log.info("接收参数{}",loginRequest);
         return userService.login(loginRequest);
     }
-
+    @GetMapping("/sign-up")
+    @ApiOperation(value = "用户注册")
+    public ResponseInfo signUp(@RequestBody User user){
+        userService.save(user);
+        return ResponseInfo.success();
+    }
     @GetMapping("/logout")
     @ApiOperation(value = "退出登录")
     public ResponseInfo logout(){

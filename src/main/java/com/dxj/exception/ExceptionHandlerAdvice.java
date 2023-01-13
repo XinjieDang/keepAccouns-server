@@ -6,6 +6,8 @@ import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import javax.security.auth.message.AuthException;
 import java.nio.file.AccessDeniedException;
 /**
  * 全局异常处理
@@ -56,7 +58,7 @@ public class ExceptionHandlerAdvice {
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     public ResponseInfo<String> handleUnexpectedServer(Exception ex) {
         log.error("系统异常：", ex);
-        return ResponseInfo.fail("系统发生异常，请联系管理员");
+        return ResponseInfo.fail("系统发生异常:"+ex.getMessage());
     }
 
     /**
@@ -67,5 +69,15 @@ public class ExceptionHandlerAdvice {
     public ResponseInfo<String> exception(Throwable throwable) {
         log.error("系统异常", throwable);
         return new ResponseInfo<>(HttpStatus.INTERNAL_SERVER_ERROR.value() + "系统异常，请联系管理员！");
+    }
+
+    /**
+     * 认证异常
+     */
+    @ExceptionHandler(AuthException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ResponseInfo<String> HandleAuthException(Throwable throwable) {
+        log.error("用户未登录或登录已过期", throwable);
+        return new ResponseInfo<>(HttpStatus.UNAUTHORIZED.value() + "用户未登录或登录已过期！");
     }
 }

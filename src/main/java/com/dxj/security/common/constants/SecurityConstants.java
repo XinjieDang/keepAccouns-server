@@ -36,16 +36,12 @@ public class SecurityConstants {
             "/v2/api-docs",
             "/v3/api-docs",
             "/webjars/**",
-            //knife4j
             "/doc.html",
     };
-
-    public static final String H2_CONSOLE = "/h2-console/**";
-
     // 系统放行白名单
     public static final String[] SYSTEM_WHITELIST = {
             "/user/login",
-            "/user/sign-up"
+            "/user/signUp"
     };
 
     private SecurityConstants() {
