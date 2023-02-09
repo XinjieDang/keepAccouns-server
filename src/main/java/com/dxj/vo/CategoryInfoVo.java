@@ -1,13 +1,10 @@
 package com.dxj.vo;
-
-import com.dxj.bo.CategoryInfoBO;
+import com.dxj.model.Category;
 import lombok.Data;
-
 import java.util.List;
 
 @Data
 public class CategoryInfoVo {
-    private Integer id;
     private Integer payType;
-    private List<CategoryInfoBO> list;
+    private List<Category> list;
 }

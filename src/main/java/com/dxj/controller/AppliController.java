@@ -12,17 +12,17 @@ import javax.annotation.Resource;
 import java.util.List;
 @Slf4j
 @RestController
-@Api(tags = "应用测试接口")
+//@Api(tags = "应用测试接口")
 public class AppliController {
     @Resource
     private UserService userService;
-    @ApiOperation(value = "测试hello")
+    //@ApiOperation(value = "测试hello")
     @GetMapping("/test")
     public ResponseInfo test(){
         List<User> list=userService.list();
         return ResponseInfo.success(list);
     }
-    @ApiOperation(value = "测试业务代码类型异常2")
+   // @ApiOperation(value = "测试业务代码类型异常2")
     @GetMapping("/calc")
     public ResponseInfo<String> calc(Integer id) {
         try {
@@ -35,7 +35,7 @@ public class AppliController {
         }
     }
     @GetMapping("/calc1")
-    @ApiOperation(value = "测试业务代码异常2")
+   // @ApiOperation(value = "测试业务代码异常2")
     public ResponseInfo<String> calc1(Integer id) {
         // 模拟异常业务代码
         int num = 1 / id;

@@ -58,7 +58,7 @@ public class ExceptionHandlerAdvice {
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     public ResponseInfo<String> handleUnexpectedServer(Exception ex) {
         log.error("系统异常：", ex);
-        return ResponseInfo.fail("系统发生异常:"+ex.getMessage());
+        return ResponseInfo.fail("系统发生异常,请联系管理员");
     }
 
     /**
