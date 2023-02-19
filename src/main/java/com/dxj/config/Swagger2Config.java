@@ -1,4 +1,6 @@
 package com.dxj.config;
+
+import com.dxj.security.common.constants.SecurityConstants;
 import com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.context.annotation.Bean;
@@ -10,9 +12,13 @@ import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.*;
 import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
 import javax.annotation.Resource;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Knife4j增强版本的swagger的前端ui
@@ -43,8 +49,29 @@ public class Swagger2Config {
                 //扫描所有注解的api
                 .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
                 .paths(PathSelectors.any())
+                .build()
+                .securityContexts(securityContext())
+                .securitySchemes(securitySchemes());
+        //.pathMapping(keepAccountConfig.getPathMapping());
+    }
+
+    private List<SecurityScheme> securitySchemes() {
+        return Collections.singletonList(new ApiKey("JWT", SecurityConstants.TOKEN_HEADER, "header"));
+    }
+
+    private List<SecurityContext> securityContext() {
+        SecurityContext securityContext = SecurityContext.builder()
+                .securityReferences(defaultAuth())
                 .build();
-                //.pathMapping(keepAccountConfig.getPathMapping());
+        return Collections.singletonList(securityContext);
+    }
+
+    List<SecurityReference> defaultAuth() {
+        AuthorizationScope authorizationScope
+                = new AuthorizationScope("global", "accessEverything");
+        AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
+        authorizationScopes[0] = authorizationScope;
+        return Collections.singletonList(new SecurityReference("JWT", authorizationScopes));
     }
 
     /**

@@ -4,8 +4,8 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost/keepAccountsDB?characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8
-    username: root
-    password: 123456
+    username: dang
+    password: dang1328791209
   servlet:
     multipart:
       max-request-size: 100MB #设置总上传数据总大小

@@ -1,6 +1,7 @@
 package com.dxj.controller;
 
 import com.dxj.bo.ResponseInfo;
+import com.dxj.dto.QueryAmountRequest;
 import com.dxj.model.Amount;
 import com.dxj.service.db.AmountService;
 import io.swagger.annotations.Api;
@@ -17,10 +18,11 @@ import javax.annotation.Resource;
 public class AmountController {
     @Resource
     private AmountService amountService;
-    @GetMapping("/find")
+    @PostMapping("/find")
     @ApiOperation(value = "查询记账信息")
-    public ResponseInfo find(){
-        return amountService.findAll();
+    public ResponseInfo find(@RequestBody(required = false) QueryAmountRequest queryAmountRequest){
+        log.info("接收参数{}",queryAmountRequest);
+        return amountService.findAll(queryAmountRequest);
     }
     @PostMapping("/add")
     @ApiOperation(value = "添加记账信息")
