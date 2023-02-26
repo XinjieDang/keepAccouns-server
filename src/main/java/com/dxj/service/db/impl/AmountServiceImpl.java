@@ -9,6 +9,8 @@ import com.dxj.mapper.AmountMapper;
 import com.dxj.mapper.CategoryMapper;
 import com.dxj.model.Amount;
 import com.dxj.model.Category;
+import com.dxj.model.LoginUser;
+import com.dxj.security.common.utils.JwtTokenUtils;
 import com.dxj.service.db.AmountService;
 import com.dxj.vo.AmountCategoryInfoVo;
 import com.dxj.vo.AmountInfoVo;
@@ -28,9 +30,10 @@ public class AmountServiceImpl extends ServiceImpl<AmountMapper, Amount> impleme
     private AmountMapper amountMapper;
     @Resource
     private CategoryMapper categoryMapper;
-
     @Override
     public ResponseInfo findAll(QueryAmountRequest queryAmountRequest) {
+      LoginUser currentLoginUser= JwtTokenUtils.getCurrentLoginUser();
+        queryAmountRequest.setUserId(currentLoginUser.getUser().getId());
         //日期去重后的数据
         List<String> dateList = amountMapper.amountDateList(queryAmountRequest);
         //返回的数据列表

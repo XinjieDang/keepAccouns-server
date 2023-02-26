@@ -1,8 +1,6 @@
 package com.dxj.dto;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
-
 /**
  * @author dxj
  * @Description 记账记录查询dto
