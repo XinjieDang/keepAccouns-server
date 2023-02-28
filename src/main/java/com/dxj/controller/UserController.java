@@ -53,7 +53,7 @@ public class UserController {
         User user = userService.getOne(new LambdaQueryWrapper<User>().eq(User::getId, currentUser.getUser().getId()).select(User::getUserName, User::getSignature, User::getAvatar));
         return ResponseInfo.success(user);
     }
-    @GetMapping("/updateUserInfo")
+    @PostMapping("/updateUserInfo")
     @ApiOperation(value = "用户信息修改")
     public ResponseInfo updateUserInfo(@RequestBody User user) {
         log.info("接收参数{}", user);
