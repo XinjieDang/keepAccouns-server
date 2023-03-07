@@ -5,12 +5,24 @@
     <select id="amountDateList" resultType="string" parameterType="com.dxj.dto.QueryAmountRequest">
         SELECT DISTINCT DATE_FORMAT(create_time, '%Y-%m-%d')
         FROM `t_ka_amount`
-        <if test="param.createTime != null and param.createTime != ''">
-            WHERE create_time LIKE CONCAT(#{param.createTime},'%')
-        </if>
         <if test="param.userId != null and param.userId != ''">
             WHERE user_id =#{param.userId}
         </if>
+        <if test="param.createTime != null and param.createTime != ''">
+            AND create_time LIKE CONCAT('%',#{param.createTime},'%')
+        </if>
+    </select>
 
+    <select id="amountList" resultType="com.dxj.model.Amount" parameterType="com.dxj.dto.QueryAmountRequest">
+        SELECT  category_id,amount,create_time,remark FROM t_ka_amount
+        <if test="param.userId != null and param.userId != ''">
+            WHERE user_id =#{param.userId}
+        </if>
+        <if test="param.createTime != null and param.createTime != ''">
+            AND create_time LIKE CONCAT('%',#{param.createTime},'%')
+        </if>
+        <if test="param.categoryId != null and param.categoryId != ''">
+            AND category_id =#{param.categoryId}
+        </if>
     </select>
 </mapper>

@@ -15,8 +15,6 @@ import com.dxj.service.db.AmountService;
 import com.dxj.vo.AmountCategoryInfoVo;
 import com.dxj.vo.AmountInfoVo;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
-
 import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -60,15 +58,17 @@ public class AmountServiceImpl extends ServiceImpl<AmountMapper, Amount> impleme
             amountInfoVo.setExpend(expend);
             amountInfoVo.setIncome(income);
             //查询当前日期下所有的记账记录列表
-            List<Amount> amountList = amountMapper.selectList(new LambdaQueryWrapper<Amount>().like(Amount::getCreateTime, amountInfoVo.getCreateDate()).eq(Amount::getUserId,queryAmountRequest.getUserId()));
+            List<Amount> amountList = amountMapper.amountList(queryAmountRequest);
             // 组装当前日期下所有的记账记录
             List<AmountBo> amountBos = new ArrayList<>();
             for (Amount amount : amountList) {
                 AmountBo amountBo = new AmountBo();
                 //查询记账类型
-                Integer amountType = categoryMapper.selectOne(new LambdaQueryWrapper<Category>().select(Category::getPayType).eq(Category::getId, amount.getCategoryId())).getPayType();
+                Category category = categoryMapper.selectOne(new LambdaQueryWrapper<Category>().select(Category::getPayType,Category::getId).eq(Category::getId, amount.getCategoryId()));
+                //设置记账分类
+                amountBo.setCategoryId(category.getId());
                 //设置记账类型
-                amountBo.setAmountType(amountType);
+                amountBo.setAmountType(category.getPayType());
                 //记账金额
                 amountBo.setAmount(amount.getAmount());
                 //记账备注
