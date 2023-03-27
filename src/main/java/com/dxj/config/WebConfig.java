@@ -21,6 +21,7 @@ public class WebConfig implements WebMvcConfigurer {
          * 资源映射路径
          * addResourceHandler：访问映射路径
          * addResourceLocations：资源绝对路径
-         */registry.addResourceHandler("/upload/**").addResourceLocations("file:/" + this.uploadPath);
+         */
+        registry.addResourceHandler("/upload/**").addResourceLocations("file:/" + this.uploadPath);
     }
 }

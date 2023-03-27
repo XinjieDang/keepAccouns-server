@@ -41,7 +41,8 @@ public class SecurityConstants {
     // 系统放行白名单
     public static final String[] SYSTEM_WHITELIST = {
             "/user/login",
-            "/user/signUp"
+            "/user/signUp",
+            "/upload/**"
     };
 
     private SecurityConstants() {

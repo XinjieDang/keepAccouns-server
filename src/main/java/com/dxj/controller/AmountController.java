@@ -37,4 +37,13 @@ public class AmountController {
         log.info("接收参数{}",amount);
         return ResponseInfo.success( amountService.save(amount));
     }
+
+    @GetMapping("/countAmount")
+    public ResponseInfo countAmount(){
+        return ResponseInfo.success("统计接口1");
+    }
+    @GetMapping("/countAmount2")
+    public ResponseInfo countAmount2(){
+        return ResponseInfo.success("统计接口2");
+    }
 }
