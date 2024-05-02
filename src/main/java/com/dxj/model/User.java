@@ -1,5 +1,4 @@
 package com.dxj.model;
-
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -8,8 +7,8 @@ import java.util.Date;
 @Data
 @TableName("t_ka_user")
 public class User {
-    @TableId(type = IdType.AUTO)
-    private Integer id;
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
+    private Long id;
     private String userName;
     private String userPassword;
     private String avatar;

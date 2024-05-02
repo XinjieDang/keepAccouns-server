@@ -9,7 +9,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class QueryAmountRequest {
-    private Integer userId;
+    private Long userId;
     private Integer categoryId;
     private String createTime;
 }

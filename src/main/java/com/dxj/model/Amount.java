@@ -10,9 +10,9 @@ import java.util.Date;
 @Data
 @TableName("t_ka_amount")
 public class Amount {
-    @TableId(type = IdType.AUTO)
-    private Integer id;
-    private Integer userId;
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
+    private Long id;
+    private Long userId;
     private Integer categoryId;
     private BigDecimal amount;
     private Date createTime;

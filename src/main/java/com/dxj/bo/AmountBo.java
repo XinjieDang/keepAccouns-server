@@ -7,8 +7,8 @@ import java.math.BigDecimal;
 import java.util.Date;
 @Data
 public class AmountBo {
-    private Integer id;
-    private Integer categoryId;
+    private Long id;
+    private Long categoryId;
     /*支出类型*/
     private Integer amountType;
     private BigDecimal amount;

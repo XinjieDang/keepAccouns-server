@@ -35,8 +35,8 @@ public class UserController {
     public ResponseInfo signUp(@RequestBody User user) {
         log.info("接收参数{}", user);
         //判断用户名是否一致
-        String userName = userService.getOne(new LambdaQueryWrapper<User>().eq(User::getUserName, user.getUserName())).getUserName();
-        if (userName.isEmpty()) {
+        long count = userService.count(new LambdaQueryWrapper<User>().eq(User::getUserName, user.getUserName()));
+        if (count<1) {
             PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
             String password = passwordEncoder.encode(user.getUserPassword());
             user.setUserPassword(password);
@@ -50,7 +50,7 @@ public class UserController {
     @ApiOperation(value = "获取用户信息")
     public ResponseInfo getUserInfo() {
         LoginUser currentUser = JwtTokenUtils.getCurrentLoginUser();
-        User user = userService.getOne(new LambdaQueryWrapper<User>().eq(User::getId, currentUser.getUser().getId()).select(User::getUserName, User::getSignature, User::getAvatar));
+        User user = userService.getOne(new LambdaQueryWrapper<User>().eq(User::getId, currentUser.getUser().getId()).select(User::getUserName, User::getSignature, User::getAvatar,User::getId));
         return ResponseInfo.success(user);
     }
     @PostMapping("/updateUserInfo")
